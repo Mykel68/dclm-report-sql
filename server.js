@@ -27,10 +27,12 @@ db.sequelize.sync({ force: false }).then(() => {
 
 const express = require("express");
 const cors = require("cors");
+const reportRoute = require("./routes/reportRoute");
 
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+app.use("/api/report", reportRoute);
 
 require("dotenv").config();
 
