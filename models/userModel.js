@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
     username: {
       type: DataTypes.STRING(45),
       allowNull: false,
-      unique: true,
     },
     password: {
       type: DataTypes.STRING(100),
@@ -17,12 +16,11 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING(45),
       allowNull: false,
-      unique: true,
     },
     role: {
       type: DataTypes.ENUM("admin", "user"),
       allowNull: false,
-      defaultValue: "user",
+      defaultValue: "admin",
     },
   });
 

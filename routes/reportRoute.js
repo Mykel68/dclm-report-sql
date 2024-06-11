@@ -14,5 +14,6 @@ router.put("/:id", reportController.editReport);
 
 router.delete("/:id", reportController.deleteReport);
 
+router.delete("/", reportController.deleteAllReports);
 
 module.exports = router;

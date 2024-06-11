@@ -27,20 +27,18 @@ db.sequelize.sync({ force: false }).then(() => {
 
 const express = require("express");
 const cors = require("cors");
-const reportRoute = require("./routes/reportRoute");
-
+const reportRoutes = require("./routes/reportRoute");
+const authRoutes = require("./routes/authRoute");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-app.use("/api/report", reportRoute);
-
 require("dotenv").config();
 
 // CORS middleware
 app.use(cors());
 app.use(express.json());
-
-
+const PORT = process.env.PORT || 5000;
+app.use("/api/report", reportRoutes);
+app.use("/api/auth", authRoutes);
 
 sequelize
   .authenticate()
