@@ -156,3 +156,32 @@ exports.deleteAllReports = async (req, res) => {
     res.status(500).json({ error: "Error deleting reports" });
   }
 };
+
+exports.searchReports = async (req, res) => {
+  try {
+    const { query } = req.query;
+    const reports = await db.Report.findAll({
+      where: {
+        [Op.or]: [
+          { date: { [Op.like]: `%${query}%` } },
+          { serviceType: { [Op.like]: `%${query}%` } },
+          { subServiceDay: { [Op.like]: `%${query}%` } },
+          { subService: { [Op.like]: `%${query}%` } },
+          { section: { [Op.like]: `%${query}%` } },
+          { supervisor: { [Op.like]: `%${query}%` } },
+          { location: { [Op.like]: `%${query}%` } },
+          { challenges: { [Op.like]: `%${query}%` } },
+          { solution: { [Op.like]: `%${query}%` } },
+          { personnelCount: { [Op.like]: `%${query}%` } },
+          { volunteersCount: { [Op.like]: `%${query}%` } },
+          { equipmentDetails: { [Op.like]: `%${query}%` } },
+          { remarks: { [Op.like]: `%${query}%` } },
+        ],
+      },
+    });
+    res.json(reports);
+  } catch (error) {
+    console.error("Error searching reports:", error);
+    res.status(500).json({ error: "Error searching reports" });
+  }
+};

@@ -6,10 +6,13 @@ require("dotenv").config();
 
 exports.register = async (req, res) => {
   try {
-    const { username, password, email } = req.body;
+    const { first_name, last_name, password, email } = req.body;
 
-    if (!username) {
-      return res.status(400).json({ error: "Username is required" });
+    if (!first_name) {
+      return res.status(400).json({ error: "First name is required" });
+    }
+    if (!last_name) {
+      return res.status(400).json({ error: "Last name is required" });
     }
 
     if (!email) {
@@ -22,10 +25,11 @@ exports.register = async (req, res) => {
 
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-    const role = "admin";
+    const role = "user";
 
     const user = await db.User.create({
-      username,
+      first_name,
+      last_name,
       password: hashedPassword,
       email,
       role,
@@ -139,8 +143,6 @@ exports.logout = async (req, res) => {
   try {
     res.clearCookie("token");
     res.json({ message: "Logged out successfully" });
-
-    // res.redirect("/login");
   } catch (error) {
     console.error("Error logging out:", error);
     res.status(500).json({ error: "Error logging out" });
